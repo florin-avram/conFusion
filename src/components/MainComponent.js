@@ -8,7 +8,7 @@ import Menu from './MenuComponent';
 import About from './AboutComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
+import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -26,6 +26,7 @@ const mapDispacthToProps = (dispatch) => ({
     fetchDishes: () => {dispatch(fetchDishes())},
     fetchComments: () => {dispatch(fetchComments())},
     fetchPromos: () => {dispatch(fetchPromos())},
+    fetchLeaders: () => {dispatch(fetchLeaders())},
     resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
 });
 
@@ -38,6 +39,7 @@ class Main extends Component {
         this.props.fetchDishes();
         this.props.fetchComments();
         this.props.fetchPromos();
+        this.props.fetchLeaders();
     }
 
     render() {
@@ -50,7 +52,9 @@ class Main extends Component {
                     promotion={this.props.promotions.promotions.filter((promo) => promo.featured)[0]}
                     promosLoading={this.props.promotions.isLoading}
                     promosErrMsg={this.props.promotions.errMsg}
-                    leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+                    leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]}
+                    leadersLoading={this.props.leaders.isLoading}
+                    leadersErrMsg={this.props.leaders.errMsg}
                 />
             );
         }
